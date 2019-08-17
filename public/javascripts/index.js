@@ -20,13 +20,14 @@ movies.map((movie) => {
 // event listener: new selection adds to array and table
 $('#search').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
     console.log('new movie selected');
-    if(!userMovies.includes(movies[clickedIndex - 1])){
+    if (!userMovies.includes(movies[clickedIndex - 1])) {
         userMovies.push(movies[clickedIndex - 1]);
         console.log(userMovies);
         updateTable();
     }
 });
 
+// adds selected movie to table UI
 function updateTable() {
     let tableBody = document.getElementById('tableBody');
     tableBody.innerHTML = '';
@@ -37,5 +38,18 @@ function updateTable() {
             + '</td></tr>';
         tableBody.innerHTML += text;
     })
-
 }
+
+let recommendButton = document.getElementById('recommendButton');
+recommendButton.addEventListener('click', () => {
+    // query server: send recommendation request
+});
+
+let clearButton = document.getElementById('clearButton');
+clearButton.addEventListener('click', () => {
+    // clear userMovies, refresh UI
+    userMovies = [];
+    updateTable();
+});
+
+// test

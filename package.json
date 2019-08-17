@@ -10,5 +10,21 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "morgan": "~1.9.1"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbpark1/movie_recommender.git"
+  },
+  "keywords": [
+    "movie"
+  ],
+  "author": "robby park",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rbpark1/movie_recommender/issues"
+  },
+  "homepage": "https://github.com/rbpark1/movie_recommender#readme",
+  "description": ""
 }
