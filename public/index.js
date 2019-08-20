@@ -84,14 +84,13 @@ recommendButton.addEventListener('click', () => {
         }
     };
 
-    xhr.onprogress = function (event) {
-        if (event.lengthComputable) {
-            alert(`Received ${event.loaded} of ${event.total} bytes`);
-        } else {
-            alert(`Received ${event.loaded} bytes`); // no Content-Length
-        }
-
-    };
+    // xhr.onprogress = function (event) {
+    //     if (event.lengthComputable) {
+    //         alert(`Received ${event.loaded} of ${event.total} bytes`);
+    //     } else {
+    //         alert(`Received ${event.loaded} bytes`); // no Content-Length
+    //     }
+    // };
 
     xhr.onerror = function () {
         alert("Request failed");
@@ -108,4 +107,17 @@ clearButton.addEventListener('click', () => {
 // given array of recIds
 function handleRecs(recIds){
     console.log(recIds);
+    let recs = movies.filter(movie => recIds.includes(movie.movieId));
+    console.log(recs);
+    updateRecsTable(recs);
+}
+
+
+function updateRecsTable(recs) {
+    let tableBody = document.getElementById('recsTableBody');
+    tableBody.innerHTML = '';
+    recs.map((movie) => {
+        let text = `<tr><th scope=\"row\"> ${movie.movieId} </th><td> ${movie.title} </td><td> ${movie.genres} </td></tr>`;
+        tableBody.innerHTML += text;
+    })
 }
