@@ -18,20 +18,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 app.post('/getrecs', (req, res, next) => {
-    console.log(req.body);
+    console.log(req.body.ids);
 
     // TODO: Pass userMovies to Python
-    const process = spawn('python3.6', ['./python/main.py', 'test']);
+    const process = spawn('python3.6', ['./python/main.py', req.body.ids.toString()]);
 
     process.stdout.on('data', (data) => {
         console.log(data.toString());
         res.send(data.toString());
     });
 
-    process.stderr.on('data', (data) => {
-        console.log('stderr: ' + data.toString());
-        res.sendStatus(500);
-    });
+    // process.stderr.on('data', (data) => {
+    //     console.log('stderr: ' + data.toString());
+    // });
 
 });
 

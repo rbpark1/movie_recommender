@@ -6,7 +6,7 @@ from user_dataframe import movies, user_movie_df
 
 # input: array of movie ids
 # output: array of recs
-def recommend(n_recommendations=10, latent_factors=50, print_output=True):
+def recommend(movieIds, n_recommendations=10, latent_factors=50, print_output=False):
     # dimensions
     # nrow = user_movie_df.shape[0]
     # ncol = user_movie_df.shape[1]
@@ -16,8 +16,9 @@ def recommend(n_recommendations=10, latent_factors=50, print_output=True):
     df1 = user_movie_df.append(new_row, ignore_index=False)
 
     # fill new user data with ratings
-    # for movie in movies:
-    #     # set rating of 5 for that movie
+    for id in movieIds:
+        # set rating of 5 for that movie
+        df1.iloc[-1][id] = 5.0
 
     # sparse matrix SVD approximation
     U, S, Vt = svds(df1, k=latent_factors)
@@ -42,5 +43,6 @@ def recommend(n_recommendations=10, latent_factors=50, print_output=True):
         print('SVD TOP %d RECOMMENDATIONS:' % n_recommendations)
         print(final_recs.to_string())
 
-    # return prediction matrix and final recommendations
-    return pred_df, final_recs
+    # return list of top rec movieIds
+    return final_recs['movieId'].tolist()
+

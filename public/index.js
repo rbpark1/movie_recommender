@@ -70,13 +70,17 @@ recommendButton.addEventListener('click', () => {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', url + '/getrecs');
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify({"userMovies": userMovies}));
+
+    let userMovieIds = userMovies.map(movie => movie.movieId);
+    xhr.send(JSON.stringify({"ids": userMovieIds}));
 
     xhr.onload = function () {
         if (xhr.status !== 200) { // analyze HTTP status of the response
             alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
         } else { // show the result
-            alert(`Done, got ${xhr.response.length} bytes`); // responseText is the server
+            // alert(`Done, got ${xhr.response.length} bytes`); // responseText is the server
+            console.log(xhr.responseText);
+            handleRecs(JSON.parse(xhr.responseText));
         }
     };
 
@@ -101,3 +105,7 @@ clearButton.addEventListener('click', () => {
     updateTable();
 });
 
+// given array of recIds
+function handleRecs(recIds){
+    console.log(recIds);
+}

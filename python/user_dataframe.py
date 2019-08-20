@@ -1,12 +1,12 @@
 import pandas as pd  # To read csv file into DataFrame
 
-movies = pd.read_csv('./python/data/ml-latest-small/movies.csv',
+movies = pd.read_csv('./python/ml-latest-small/movies.csv',
                      usecols=["movieId", "title", "genres"])
-ratings = pd.read_csv('./python/data/ml-latest-small/ratings.csv',
+ratings = pd.read_csv('./python/ml-latest-small/ratings.csv',
                       usecols=["userId", "movieId", "rating", "timestamp"])
-links = pd.read_csv('./python/data/ml-latest-small/links.csv',
+links = pd.read_csv('./python/ml-latest-small/links.csv',
                     usecols=["movieId", "imdbId", "tmdbId"])
-tags = pd.read_csv('./python/data/ml-latest-small/tags.csv',
+tags = pd.read_csv('./python/ml-latest-small/tags.csv',
                    usecols=["userId", "movieId", "tag", "timestamp"])
 
 user_movie_df = ratings.pivot(

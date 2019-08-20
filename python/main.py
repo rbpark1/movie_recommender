@@ -15,7 +15,9 @@ from user_dataframe import ratings, user_movie_df, movies, get_movies_json
 
 
 def main(argv):
-    print('here')
+    movieIds = eval(argv[1])
+    print(svd.recommend(movieIds, print_output=False))
+
 
 if __name__ == "__main__":
     main(sys.argv)
