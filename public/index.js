@@ -3,6 +3,7 @@ console.log("Loaded!");
 let url = "http://localhost:3000";
 let userMovies = [];  // user selected movies
 let movies;
+
 getFile(url + '/data/export_df.json', handleFileData);
 
 function getFile(path, callback) {
@@ -65,11 +66,19 @@ function updateTable() {
     })
 }
 
+// recommend button
+// queries server for movie recommendations
+// can be in loading or not loading state
+// if loading, disable server requesting
+let loading = false;
 let recommendButton = document.getElementById('recommendButton');
 recommendButton.addEventListener('click', () => {
-
-    if(userMovies.length < 1){
+    if (userMovies.length < 1) {
         alert('Please select at least 1 movie.');
+        return;
+    }
+
+    if (loading) {
         return;
     }
 
@@ -78,6 +87,9 @@ recommendButton.addEventListener('click', () => {
     xhr.setRequestHeader("Content-Type", "application/json");
 
     let userMovieIds = userMovies.map(movie => movie.movieId);
+    loading = true;
+    recommendButton.setAttribute('disabled', 'disabled');
+
     xhr.send(JSON.stringify({"ids": userMovieIds}));
 
     xhr.onload = function () {
@@ -88,18 +100,14 @@ recommendButton.addEventListener('click', () => {
             console.log(xhr.responseText);
             handleRecs(JSON.parse(xhr.responseText));
         }
+        loading = false;
+        recommendButton.removeAttribute('disabled');
     };
-
-    // xhr.onprogress = function (event) {
-    //     if (event.lengthComputable) {
-    //         alert(`Received ${event.loaded} of ${event.total} bytes`);
-    //     } else {
-    //         alert(`Received ${event.loaded} bytes`); // no Content-Length
-    //     }
-    // };
 
     xhr.onerror = function () {
         alert("Request failed");
+        loading = false;
+        recommendButton.removeAttribute('disabled');
     };
 });
 
@@ -111,7 +119,7 @@ clearButton.addEventListener('click', () => {
 });
 
 // given array of recIds
-function handleRecs(recIds){
+function handleRecs(recIds) {
     console.log(recIds);
     let recs = movies.filter(movie => recIds.includes(movie.movieId));
     console.log(recs);
