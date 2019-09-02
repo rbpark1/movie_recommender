@@ -67,6 +67,12 @@ function updateTable() {
 
 let recommendButton = document.getElementById('recommendButton');
 recommendButton.addEventListener('click', () => {
+
+    if(userMovies.length < 1){
+        alert('Please select at least 1 movie.');
+        return;
+    }
+
     let xhr = new XMLHttpRequest();
     xhr.open('POST', url + '/getrecs');
     xhr.setRequestHeader("Content-Type", "application/json");

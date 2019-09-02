@@ -1,12 +1,12 @@
 import pandas as pd
 import numpy as np
 from scipy.sparse.linalg import svds
-from user_dataframe import movies, user_movie_df
+from user_dataframe import user_movie_df
 
 
 # input: array of movie ids
 # output: array of recs
-def recommend(movieIds, n_recommendations=10, latent_factors=50, print_output=False):
+def recommend(movieIds, n_recommendations=10, latent_factors=50):
     # dimensions
     # nrow = user_movie_df.shape[0]
     # ncol = user_movie_df.shape[1]
@@ -31,18 +31,8 @@ def recommend(movieIds, n_recommendations=10, latent_factors=50, print_output=Fa
     user_ratings = df1.iloc[-1]
     already_rated_labels = list(user_ratings.iloc[user_ratings.nonzero()[0]].index)
     # drop already rated movies and then sort by top recommendations
-    results_df = pred_df.iloc[-1].drop(labels=already_rated_labels).sort_values(ascending=False).to_frame()
-
-    final_recs = pd.merge(results_df, movies, on='movieId')[['movieId', 'title', 'genres']].head(n_recommendations)
-
-    if print_output:
-        print("USERS TOP MOVIES:")
-        top_user_ratings = user_ratings.sort_values(ascending=False).to_frame()
-        print(pd.merge(top_user_ratings, movies, on='movieId').head(15).to_string())
-
-        print('SVD TOP %d RECOMMENDATIONS:' % n_recommendations)
-        print(final_recs.to_string())
+    results_df = pred_df.iloc[-1].drop(labels=already_rated_labels).sort_values(ascending=False)
+    final_recs = results_df.head(n_recommendations)
 
     # return list of top rec movieIds
-    return final_recs['movieId'].tolist()
-
+    return final_recs.keys().tolist()
