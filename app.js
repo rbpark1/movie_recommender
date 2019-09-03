@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var recsRouter = require('./routes/getrecs');
+var posterRouter = require('./routes/getposter');
 var app = express();
 
 app.use(logger('dev'));
@@ -15,5 +16,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/getrecs', recsRouter);
+app.use('/getposter', posterRouter);
 
 module.exports = app;
