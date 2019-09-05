@@ -15,7 +15,6 @@ router.post('/', (req, res, next) => {
 
     process.stderr.on('data', (data) => {
         console.error('stderr: ' + data.toString());
-        res.status(500).send();
     });
 });
 

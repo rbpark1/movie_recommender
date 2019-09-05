@@ -1,10 +1,10 @@
 console.log("Loaded!");
 
-let url = "http://localhost:3000";
+let url = "";
 let userMovies = [];  // user selected movies
 let movies;
 
-getFile(url + '/data/export_df.json', handleFileData);
+getFile(url + 'export_df.json', handleFileData);
 
 function getFile(path, callback) {
     let xhr = new XMLHttpRequest();
