@@ -4,8 +4,6 @@ let url = "";
 let userMovies = [];  // user selected movies
 let movies;
 
-getFile(url + 'export_df.json', handleFileData);
-
 function getFile(path, callback) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -31,30 +29,64 @@ function handleFileData(fileData) {
         console.error("handleFileData error");
         return;
     }
-
     // use the file data
     movies = JSON.parse(fileData);
     // console.log(movies);
-
-    // insert movies into search
-    let search = document.getElementById('search');
-    movies.map((movie) => {
-        let item = document.createElement('option');
-        item.innerHTML = movie.title;
-        search.appendChild(item)
-    });
-    $('#search').selectpicker('refresh');
 }
 
-// event listener: new selection adds to array and table
-$('#search').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-    console.log('new movie selected');
-    if (!userMovies.includes(movies[clickedIndex - 1])) {
-        userMovies.push(movies[clickedIndex - 1]);
-        console.log(userMovies);
-        addTableRow(movies[clickedIndex - 1], false);
+
+let movieInput = document.getElementById('movieInput');
+let movieDropdown = document.getElementById('movieDropdown');
+
+movieInput.addEventListener("input", handleDropdown);
+movieInput.addEventListener('focus', handleDropdown);
+
+
+function handleDropdown(e) {
+    clearDropdownAndHide();
+
+    let text = e.target.value;
+    if (text.length > 1) {
+        movieDropdown.classList.remove('hide');
+
+        // filter arr with input text
+        let arr = movies.filter(movie => movie.title.toLowerCase().includes(text.toLowerCase()));
+        arr.map(movie => {
+            // add subitem
+            let subItem = document.createElement('button');
+            movieDropdown.appendChild(subItem);
+            subItem.setAttribute('type', 'button');
+            subItem.classList.add('list-group-item');
+            subItem.classList.add('list-group-item-action');
+            subItem.textContent = movie.title;
+            subItem.addEventListener('click', (e) => {
+                let movie = getMovie(e.target.textContent);
+                if (!userMovies.includes(movie)) {
+                    userMovies.push(movie);
+                    console.log(userMovies);
+                    addTableRow(movie, false);
+                    clearDropdownAndHide();
+                    movieInput.value = '';
+                }
+            });
+        });
+        // if empty, hide
+        if (!movieDropdown.firstChild) movieDropdown.classList.add('hide');
     }
-});
+}
+
+// can return undefined
+function getMovie(title) {
+    return movies.find(movie => {
+        return movie.title === title;
+    });
+}
+
+function clearDropdownAndHide() {
+    // clear
+    while (movieDropdown.firstChild) movieDropdown.firstChild.remove();
+    movieDropdown.classList.add('hide');
+}
 
 // adds selected movie to table UI
 function addTableRow(movie, isRecs) {
@@ -161,3 +193,6 @@ function requestPoster(movie, imgObj) {
         console.error("Movie poster request failed: " + movie);
     };
 }
+
+
+getFile(url + 'export_df.json', handleFileData);

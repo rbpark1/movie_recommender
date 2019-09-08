@@ -8,6 +8,7 @@
   "dependencies": {
     "body-parser": "latest",
     "childprocess": "latest",
+    "compression": "^1.7.4",
     "config": "^3.2.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
