@@ -1,6 +1,6 @@
 console.log("Loaded!");
 
-let url = "";
+let url = "/movies/";
 let userMovies = [];  // user selected movies
 let movies;
 
@@ -195,4 +195,4 @@ function requestPoster(movie, imgObj) {
 }
 
 
-getFile(url + 'export_df.json', handleFileData);
+getFile('export_df.json', handleFileData);
