@@ -14,6 +14,7 @@ class App extends Component {
     };
 
     this.selectMovie = this.selectMovie.bind(this);
+    this.removeUserMovie = this.removeUserMovie.bind(this);
   }
 
   // initial code to run on start
@@ -29,7 +30,10 @@ class App extends Component {
             :
             <SearchBar movies={this.state.movies} selectMovie={this.selectMovie}/>
         }
-        <div>{this.state.userMovies.map(movie => <Movie movie={movie.title}/>)}</div>
+
+        <div className='user-movies-container'>
+          {this.state.userMovies.map(movie => <Movie key={movie.movieId} movie={movie} removeUserMovie={this.removeUserMovie}/>)}
+        </div>
       </div>
     );
   }
@@ -48,6 +52,14 @@ class App extends Component {
     let set = new Set([...this.state.userMovies, movie]);
     this.setState({
       userMovies: [...set]
+    });
+  }
+
+  // removes a userMovie
+  removeUserMovie(target) {
+    let filteredUserMovies = this.state.userMovies.filter(movie => movie.movieId !== target.movieId);
+    this.setState({
+      userMovies: filteredUserMovies
     });
   }
 }

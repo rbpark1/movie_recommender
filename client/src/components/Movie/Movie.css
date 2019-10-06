@@ -1,3 +1,7 @@
 .Movie {
+    background-color: grey;
+}
 
+img {
+    width: 200px;
 }
