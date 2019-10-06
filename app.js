@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static('public'));
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/getrecs', recsRouter);
 app.use('/getposter', posterRouter);
 

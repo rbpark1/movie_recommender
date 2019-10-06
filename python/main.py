@@ -5,15 +5,11 @@ import sys
 import svd
 from user_dataframe import ratings, user_movie_df, movies, get_movies_json
 
-# print("USERS TOP MOVIES:")
-# user_ratings = user_movie_matrix.iloc[userId - 1]
-# top_user_ratings = user_ratings.sort_values(ascending=False).to_frame()
-# print(pd.merge(top_user_ratings, movies, on='movieId').head(10).to_string())
-
-# svd.recommend()
-# cf_knn.recommend(userId)
-
-
+# child_process interface
+# argument input: string, array of movieids
+# ex: '[1 3 5]'
+# output: n_recs (default 10)
+# ex: '[1 5 14 16]'
 def main(argv):
     movieIds = eval(argv[1])
     if isinstance(movieIds, int):

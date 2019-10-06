@@ -1,0 +1,9 @@
+.Dropdown {
+    background-color: grey;
+    position: absolute;
+    max-height: 500px;
+    width: 500px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}

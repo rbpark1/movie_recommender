@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             let posterData = JSON.parse(data);
-            if (posterData.posters.length > 0) {
+            if (posterData.posters && posterData.posters.length > 0) {
                 res.send({'url': 'https://image.tmdb.org/t/p/w500/' + posterData.posters[0].file_path});  // img url
             } else {
                 console.error('no posters found');

@@ -1,6 +1,7 @@
 console.log("Loaded!");
 
-let url = "/movies/";
+let url = "";
+// let url = "/movies/";
 let userMovies = [];  // user selected movies
 let movies;
 
