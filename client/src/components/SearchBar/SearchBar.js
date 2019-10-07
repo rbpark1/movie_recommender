@@ -19,14 +19,23 @@ class SearchBar extends Component {
     render() {
         return (
             <div className="SearchBar">
-                <input type="text" id="movie-input" placeholder="Enter film title..." value={this.state.text} onChange={e => this.showDropdown(e.target.value)}/>
-                <button>Get Recommendations</button>
+                <input
+                    type="text"
+                    id="movie-input"
+                    placeholder="Enter film title..."
+                    autoComplete="off"
+                    value={this.state.text}
+                    onChange={e => this.showDropdown(e.target.value)}/>
 
                 {this.state.dropdown.length === 0 ?
                     null
                     :
                     <Dropdown movies={this.state.dropdown} selectMovie={this.selectMovie}/>
                 }
+
+                <button className="get-recs-button" onClick={this.props.getRecs}>Get Recommendations</button>
+                <button className="clear-button" onClick={this.props.clearAll}>Clear All</button>
+
             </div>
         );
     }

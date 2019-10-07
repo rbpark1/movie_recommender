@@ -1,67 +1,120 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import SearchBar from "./SearchBar/SearchBar";
 import Movie from "./Movie/Movie";
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      movies: [],  // list of all movies
-      userMovies: [],  // movies currently selected by user
-    };
+        this.state = {
+            movies: [],  // list of all movies
+            userMovies: [],  // movies currently selected by user
+            recs: []  // list of recommended movies
+        };
 
-    this.selectMovie = this.selectMovie.bind(this);
-    this.removeUserMovie = this.removeUserMovie.bind(this);
-  }
+        this.selectMovie = this.selectMovie.bind(this);
+        this.removeUserMovie = this.removeUserMovie.bind(this);
+        this.clearAll = this.clearAll.bind(this);
+        this.getRecs = this.getRecs.bind(this);
+    }
 
-  // initial code to run on start
-  componentDidMount() {
-    this.getFile('export_df.json')
-  }
+    // initial code to run on start
+    componentDidMount() {
+        this.getFile('export_df.json')
+    }
 
-  render() {
-    return (
-      <div className="App">
-        {this.state.movies === [] ?
-            <div>Loading</div>
-            :
-            <SearchBar movies={this.state.movies} selectMovie={this.selectMovie}/>
+    render() {
+        return (
+            <div className="App">
+                {this.state.movies === [] ?
+                    <div>Loading</div>
+                    :
+                    <SearchBar movies={this.state.movies} selectMovie={this.selectMovie} clearAll={this.clearAll}
+                               getRecs={this.getRecs}/>
+                }
+
+                <h1>Your selected films:</h1>
+                <div className='movie-container'>
+                    {this.state.userMovies.map(movie => <Movie key={movie.movieId} movie={movie} showRemove={true}
+                                                               removeUserMovie={this.removeUserMovie}/>)}
+                </div>
+
+
+                <h1>Recommendations:</h1>
+                <div className='movie-container'>
+                    {this.state.recs.map(movie => <Movie key={movie.movieId} movie={movie} showRemove={false}
+                                                         removeUserMovie={this.removeUserMovie}/>)}
+                </div>
+
+            </div>
+        );
+    }
+
+    // fetches recs from server and sets this.state.recs
+    getRecs() {
+        if (this.state.userMovies.length < 1) {
+            alert('Please select a movie.');
+            return;
         }
 
-        <div className='user-movies-container'>
-          {this.state.userMovies.map(movie => <Movie key={movie.movieId} movie={movie} removeUserMovie={this.removeUserMovie}/>)}
-        </div>
-      </div>
-    );
-  }
+        let movieIds = this.state.userMovies.map(movie => movie.movieId);
+        let body = {"ids": movieIds};
+        console.log(body);
+        fetch('/getrecs', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify(body)
+        })
+            .then(response => response.json())
+            .then(data => this.showRecs(data))
+    }
 
-  // request export_df.json static file from server and updates movies
-  getFile(url) {
-    fetch(url)
-        .then(response => response.json())
-        .then(data => this.setState({movies: data}))
-        .catch(error => console.error(error));
-  }
+    // input: array of movieIds
+    showRecs(data) {
+        let arr = data.map(movieId => this.state.movies.find(movie => (movie.movieId === movieId)));
+        console.log(arr);
+        this.setState({
+            recs: arr
+        })
+    }
 
-  // called by SearchBar, adds movie to userMovies
-  selectMovie(movie) {
-    // set to make list unique
-    let set = new Set([...this.state.userMovies, movie]);
-    this.setState({
-      userMovies: [...set]
-    });
-  }
+    // clear all movies
+    clearAll() {
+        this.setState({
+            userMovies: [],
+            recs: [],
+        })
+    }
 
-  // removes a userMovie
-  removeUserMovie(target) {
-    let filteredUserMovies = this.state.userMovies.filter(movie => movie.movieId !== target.movieId);
-    this.setState({
-      userMovies: filteredUserMovies
-    });
-  }
+    // request export_df.json static file from server and updates movies
+    getFile(url) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => this.setState({movies: data}))
+            .catch(error => console.error(error));
+    }
+
+    // called by SearchBar, adds movie to userMovies
+    selectMovie(movie) {
+        // set to make list unique
+        let set = new Set([...this.state.userMovies, movie]);
+        this.setState({
+            userMovies: [...set]
+        });
+    }
+
+    // removes a userMovie
+    removeUserMovie(target) {
+        let filteredUserMovies = this.state.userMovies.filter(movie => movie.movieId !== target.movieId);
+        this.setState({
+            userMovies: filteredUserMovies
+        });
+    }
 }
 
 export default App;

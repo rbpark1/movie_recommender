@@ -1,9 +1,19 @@
 .Dropdown {
-    background-color: grey;
+    background-color: black;
     position: absolute;
+    top: 90px;
+    min-width: 50%;
     max-height: 500px;
-    width: 500px;
-    margin-bottom: 10px;
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
+    z-index: 100;
+    /*margin: 0 10px;*/
+}
+
+.Dropdown p {
+    padding: 10px
+}
+
+.Dropdown p:hover {
+    background-color: #305ae3;
 }

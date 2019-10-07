@@ -5,6 +5,9 @@ const {spawn} = require("child_process");
 
 router.post('/', (req, res, next) => {
     console.log(req.body.ids);
+    if(req.body.ids === undefined) {
+        // error
+    }
 
     const process = spawn('python3.6', ['./python/main.py', req.body.ids.toString()]);
 

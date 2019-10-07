@@ -18,12 +18,26 @@ class Movie extends Component {
     render() {
         return (
             <div className='Movie'>
-                <a href={"https://www.themoviedb.org/movie/" + this.props.movie.tmdbId}>
-                    <img src={this.state.imgUrl === "" ? poster : this.state.imgUrl} alt='poster'/>
-                </a>
-                <h2>{this.props.movie.title}</h2>
-                {this.renderGenres(this.props.movie.genres)}
-                <button onClick={() => this.props.removeUserMovie(this.props.movie)}>Remove</button>
+
+                {this.props.showRemove ?
+                    <div className='remove-button' onClick={() => this.props.removeUserMovie(this.props.movie)}>
+                        <i className="fas fa-times-circle"/>
+                    </div>
+                    :
+                    null
+                }
+
+
+                <div className='img-container'>
+                    <a href={"https://www.themoviedb.org/movie/" + this.props.movie.tmdbId}>
+                        <img src={this.state.imgUrl === "" ? poster : this.state.imgUrl} alt='poster'/>
+                    </a>
+                </div>
+
+                <div className='text-container'>
+                    <h2>{this.props.movie.title}</h2>
+                    <ul className='genres'>{this.renderGenres(this.props.movie.genres)}</ul>
+                </div>
             </div>
         );
     }
@@ -36,7 +50,8 @@ class Movie extends Component {
     }
 
     renderGenres(genres) {
-        return <p>{genres}</p>
+        let arr = genres.split('|');
+        return arr.map(genre => (<li key={genre}>{genre}</li>));
     }
 }
 

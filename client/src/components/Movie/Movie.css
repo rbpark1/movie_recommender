@@ -1,7 +1,64 @@
 .Movie {
-    background-color: grey;
+    /*background-color: grey;*/
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    justify-content: flex-start;
+    margin: 10px 5px;
+    padding: 5px;
 }
 
+.remove-button {
+    color: orange;
+    position: relative;
+    font-size: 26pt;
+    cursor: pointer;
+    width: fit-content;
+    height: 0;
+    z-index: 10;
+    top: -8px;
+    right: -8px;
+    align-self: flex-end;
+}
+
+.text-container {
+    background-color: black;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.text-container h2 {
+    font-size: 12pt;
+    /*text-align: center;*/
+    /*margin: 10px 0 5px 0;*/
+}
+
+
+.img-container {
+}
+
+
 img {
-    width: 200px;
+    width: 100%;
+    height: auto;
+}
+
+.genres {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    font-size: 10pt;
+}
+
+.genres li {
+    color: white;
+    display: block;
+    border-radius: 4px;
+    background: #305ae3;
+    margin: 2px 2px;
+    padding: 5px;
 }
