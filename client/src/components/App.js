@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import SearchBar from "./SearchBar/SearchBar";
 import Movie from "./Movie/Movie";
+import Loading from "./Loading/Loading";
 
 class App extends Component {
 
@@ -9,6 +10,7 @@ class App extends Component {
         super(props);
 
         this.state = {
+            loading: true,
             movies: [],  // list of all movies
             userMovies: [],  // movies currently selected by user
             recs: []  // list of recommended movies
@@ -28,12 +30,15 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                {this.state.movies === [] ?
-                    <div>Loading</div>
+
+                {this.state.loading ?
+                    <Loading/>
                     :
-                    <SearchBar movies={this.state.movies} selectMovie={this.selectMovie} clearAll={this.clearAll}
-                               getRecs={this.getRecs}/>
+                    null
                 }
+
+                <SearchBar movies={this.state.movies} selectMovie={this.selectMovie} clearAll={this.clearAll}
+                           getRecs={this.getRecs}/>
 
                 <h1>Your selected films:</h1>
                 <div className='movie-container'>
@@ -59,6 +64,10 @@ class App extends Component {
             return;
         }
 
+        this.setState({
+            loading: true
+        });
+
         let movieIds = this.state.userMovies.map(movie => movie.movieId);
         let body = {"ids": movieIds};
         console.log(body);
@@ -79,6 +88,7 @@ class App extends Component {
         let arr = data.map(movieId => this.state.movies.find(movie => (movie.movieId === movieId)));
         console.log(arr);
         this.setState({
+            loading: false,
             recs: arr
         })
     }
@@ -95,7 +105,11 @@ class App extends Component {
     getFile(url) {
         fetch(url)
             .then(response => response.json())
-            .then(data => this.setState({movies: data}))
+            .then(data =>
+                this.setState({
+                    loading: false,
+                    movies: data
+                }))
             .catch(error => console.error(error));
     }
 
