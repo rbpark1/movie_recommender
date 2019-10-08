@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3002",
+  "homepage": "robbypark.com/movies",
   "dependencies": {
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-scripts": "0.9.5"
   },
   "devDependencies": {
-    "postcss-normalize": "^8.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

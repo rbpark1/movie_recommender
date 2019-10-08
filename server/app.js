@@ -1,11 +1,8 @@
 var compression = require('compression');
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var html = require('html');
 
-var indexRouter = require('./routes/index');
 var recsRouter = require('./routes/getrecs');
 var posterRouter = require('./routes/getposter');
 var app = express();
@@ -18,7 +15,6 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 
-// app.use('/', indexRouter);
 app.use('/getrecs', recsRouter);
 app.use('/getposter', posterRouter);
 

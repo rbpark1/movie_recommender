@@ -2,3 +2,6 @@
 server/node_modules/
 client/node_modules/
 server/config/
+.idea/
+server/python/__pycache__/
+client/build
