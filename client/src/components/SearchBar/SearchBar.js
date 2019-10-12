@@ -51,7 +51,7 @@ class SearchBar extends Component {
         if (text.length > 1) {
             // filter arr with input text
             let arr = this.props.movies.filter(movie => movie.title.toLowerCase().includes(text.toLowerCase()));
-            console.log(arr);
+            // console.log(arr);
             this.setState({
                 dropdown: arr
             });
@@ -67,7 +67,7 @@ class SearchBar extends Component {
     selectMovie(movie) {
         // movie selected
         if(movie !== null) {
-            console.log(movie);
+            // console.log(movie);
             // add movie to list of selected movies in parent Component
             this.props.selectMovie(movie);
         }

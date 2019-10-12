@@ -1,7 +1,5 @@
 # Project exclude paths
-server/node_modules/
-client/node_modules/
-server/config/
 .idea/
+server/node_modules/
+server/config/
 server/python/__pycache__/
-client/build

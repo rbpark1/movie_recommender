@@ -70,8 +70,8 @@ class App extends Component {
 
         let movieIds = this.state.userMovies.map(movie => movie.movieId);
         let body = {"ids": movieIds};
-        console.log(body);
-        fetch('/getrecs', {
+        // console.log(body);
+        fetch('/recs', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ class App extends Component {
     // input: array of movieIds
     showRecs(data) {
         let arr = data.map(movieId => this.state.movies.find(movie => (movie.movieId === movieId)));
-        console.log(arr);
+        // console.log(arr);
         this.setState({
             loading: false,
             recs: arr

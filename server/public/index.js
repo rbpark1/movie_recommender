@@ -1,5 +1,3 @@
-console.log("Loaded!");
-
 let url = "";
 // let url = "/movies/";
 let userMovies = [];  // user selected movies
@@ -32,7 +30,7 @@ function handleFileData(fileData) {
     }
     // use the file data
     movies = JSON.parse(fileData);
-    // console.log(movies);
+    console.log(movies);
 }
 
 
@@ -124,7 +122,7 @@ recommendButton.addEventListener('click', () => {
     }
 
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', url + '/getrecs');
+    xhr.open('POST', url + '/recs');
     xhr.setRequestHeader("Content-Type", "application/json");
 
     let userMovieIds = userMovies.map(movie => movie.movieId);
@@ -176,7 +174,7 @@ function handleRecs(recIds) {
 // Sets img src to movie poster link, or does nothing if unavailable
 function requestPoster(movie, imgObj) {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', url + '/getposter?tmdbId=' + movie.tmdbId);
+    xhr.open('GET', url + '/poster?tmdbId=' + movie.tmdbId);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send();
 

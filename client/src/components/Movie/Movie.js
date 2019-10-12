@@ -43,10 +43,10 @@ class Movie extends Component {
     }
 
     requestPoster(tmdbId) {
-        fetch("/getposter?tmdbId=" + tmdbId)
+        fetch("/poster?tmdbId=" + tmdbId)
             .then(response => response.json())
             .then(data => this.setState({imgUrl: data.url}))
-            .catch(error => console.error(error));
+            .catch(error => console.error("Request poster error"));
     }
 
     renderGenres(genres) {
