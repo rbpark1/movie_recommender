@@ -10,7 +10,7 @@ This app uses React in the front-end (Create React App) and Node and Express in 
 
 ## Usage
 
-In the dev environment, two localhost servers need to be run: one for the React front-end and one for the Node back-end. These run on `locahost:3000` and `localhost:3002` respectively. The FE proxies requests to `localhost:3002`.
+In the dev environment, two localhost servers need to be run: one for the React front-end and one for the Node back-end. These run on `http://locahost:3000` and `http://localhost:3002` respectively. The FE proxies requests to `http://localhost:3002`.
 
 #### Step 1: Server config
 
@@ -61,14 +61,15 @@ Then host a static file server pointing to the /build/ directory.
 $ cd server
 $ npm run start
 ```
-Use a reverse proxy like Nginx to proxy API requests to `localhost:3002`.
+Use a reverse proxy like Nginx to proxy API requests to `http://localhost:3002`.
 
 
 ## Dependencies
 
 See `package.json`. `npm install` will download all dependencies.
 
-* npm v3.5.2
-* React v16.10
+* npm v3.5
+* Create React App (React v16.10)
+* Node v8.10
 * Express v4.16
 * Python 3.6
